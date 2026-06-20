@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>◊ FallMortgagePractice · sovereign UK mortgage broker firm accounting · procuration · clawback · pipeline · PI</title>
+<meta name="description" content="Sovereign firm-side accounting for UK mortgage broker practices · procuration fee ledger · broker fee ledger · clawback liability · pipeline P&L · per-adviser P&L · firm P&L · PI/FCA/network-levy accruals · protection commission ledger · invoice generator. Single HTML, IDB primary, MIT.">
+<meta name="prime" content="881">
+<meta name="theme-color" content="#0b0a0f">
+<link rel="manifest" href='data:application/manifest+json,{"name":"FallMortgagePractice","short_name":"mortgagepractice","start_url":"./","display":"standalone","background_color":"%230b0a0f","theme_color":"%23b8974a","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 192 192%27><rect width=%27192%27 height=%27192%27 fill=%27%230b0a0f%27 rx=%2828%27/><text x=%2796%27 y=%27140%27 font-family=%27Georgia, serif%27 font-size=%27122%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23b8974a%27>%E2%97%8A</text></svg>","sizes":"192x192","type":"image/svg+xml"}]}'>
+<style>
+:root{
+  --void:#0b0a0f;--void-2:#13121a;--ink:#1a1922;--ink-2:#22212c;
+  --line:#2a2934;--line-soft:#1f1e28;
+  --cream:#e6e1d6;--cream-dim:#a8a395;--cream-muted:#6e6a5e;
+  --brass:#b8974a;--amber:#ff8c00;--ox:#8b1a1a;
+  --green:#4ade80;--red:#ef4444;--blue:#60a5fa;--yellow:#fbbf24;--purple:#c084fc;
+  --serif:Georgia,'Libre Baskerville',ui-serif,serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',ui-monospace,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--void);color:var(--cream);font:14px/1.55 var(--sans);min-height:100dvh;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;background:transparent;border:none;color:inherit}
+input,textarea,select{font-family:inherit;background:var(--ink);border:1px solid var(--line);color:var(--cream);border-radius:3px;padding:7px 10px;outline:none;font-size:13px}
+input:focus,textarea:focus,select:focus{border-color:var(--brass)}
+input[type=number]{font-family:var(--mono)}
+a{color:var(--brass)} a:hover{color:var(--amber)}
+.app{min-height:100dvh;display:grid;grid-template-rows:48px 1fr}
+header{display:flex;align-items:center;border-bottom:1px solid var(--line);background:var(--void-2);user-select:none}
+.brand{display:flex;align-items:center;gap:10px;padding:0 16px;height:100%;border-right:1px solid var(--line)}
+.brand .mark{width:28px;height:28px;background:linear-gradient(135deg,var(--brass),var(--amber));border-radius:5px;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:16px;color:var(--void)}
+.brand .name{font-family:var(--serif);font-weight:600;font-size:14px;letter-spacing:0.02em}
+.brand .seal{font-family:var(--mono);font-size:9px;color:var(--cream-muted);letter-spacing:0.18em;text-transform:uppercase}
+nav.tabs{display:flex;flex:1;overflow-x:auto;align-items:stretch}
+nav.tabs button{padding:0 14px;font-size:12px;color:var(--cream-dim);letter-spacing:0.04em;display:flex;align-items:center;gap:6px;border-right:1px solid var(--line-soft);height:100%;white-space:nowrap;border-top:2px solid transparent}
+nav.tabs button:hover{background:var(--ink);color:var(--cream)}
+nav.tabs button.active{background:var(--ink);color:var(--brass);border-top-color:var(--brass)}
+.tools-r{display:flex;align-items:center;gap:5px;padding:0 14px;height:100%;border-left:1px solid var(--line)}
+.tool-btn{padding:5px 11px;border-radius:3px;font-size:11px;color:var(--cream-dim);letter-spacing:0.06em;text-transform:uppercase;font-family:var(--mono);border:1px solid var(--line)}
+.tool-btn:hover{background:var(--ink);color:var(--cream);border-color:var(--brass)}
+.tool-btn.primary{background:var(--brass);color:var(--void);border-color:var(--brass);font-weight:600}
+.tool-btn.primary:hover{background:var(--amber);border-color:var(--amber)}
+.tool-btn.t3{border-color:var(--blue);color:var(--blue)}
+main{padding:18px 22px 60px;overflow-y:auto;max-width:1320px;margin:0 auto;width:100%}
+.disclaimer{background:rgba(139,26,26,0.15);border:1px solid var(--ox);border-left:3px solid var(--ox);border-radius:3px;padding:12px 16px;margin-bottom:18px;font-size:12px;color:var(--cream)}
+.disclaimer strong{color:var(--brass)}
+.section-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:14px;flex-wrap:wrap}
+.section-h h2{font-family:var(--serif);font-size:18px;font-weight:600;letter-spacing:0.01em}
+.section-h .sub{font-family:var(--mono);font-size:11px;color:var(--cream-muted);letter-spacing:0.08em;text-transform:uppercase}
+.section-h .actions{display:flex;gap:6px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:14px}
+.card{background:var(--void-2);border:1px solid var(--line);border-radius:4px;padding:16px 18px}
+.card h3{font-family:var(--serif);font-size:14px;font-weight:600;margin-bottom:10px;color:var(--cream);letter-spacing:0.01em}
+.card h3 .meta{font-family:var(--mono);font-size:10px;color:var(--brass);letter-spacing:0.1em;margin-left:8px}
+.kpi{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px dashed var(--line-soft);font-size:13px;gap:8px}
+.kpi:last-child{border-bottom:none}
+.kpi .l{color:var(--cream-dim)} .kpi .v{font-family:var(--mono);color:var(--cream);font-weight:500;text-align:right}
+.kpi .v.green{color:var(--green)}.kpi .v.red{color:var(--red)}.kpi .v.amber{color:var(--amber)}.kpi .v.brass{color:var(--brass)}.kpi .v.blue{color:var(--blue)}.kpi .v.purple{color:var(--purple)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.field label{display:block;font-family:var(--mono);font-size:10px;color:var(--cream-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px}
+.field input,.field select,.field textarea{width:100%}
+.field .hint{font-size:10px;color:var(--cream-muted);margin-top:3px;font-family:var(--mono)}
+.btn{padding:7px 14px;border:1px solid var(--brass);border-radius:3px;font-size:12px;color:var(--cream);background:transparent;letter-spacing:0.04em;cursor:pointer}
+.btn:hover{border-color:var(--amber);color:var(--amber)}
+.btn.primary{background:var(--brass);color:var(--void);border-color:var(--brass);font-weight:600}
+.btn.primary:hover{background:var(--amber);border-color:var(--amber);color:var(--void)}
+.btn.danger:hover{border-color:var(--red);color:var(--red)}
+.btn.sm{padding:4px 9px;font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line-soft);text-align:left;vertical-align:top}
+th{color:var(--brass);font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600}
+td.r{text-align:right;font-family:var(--mono)}
+td.mono{font-family:var(--mono);font-size:12px}
+tr.total td{font-weight:600;border-top:1px solid var(--brass);border-bottom:none;padding-top:10px}
+tr.total td.r{color:var(--brass)}
+tr.clickable{cursor:pointer}
+tr.clickable:hover td{background:var(--ink)}
+.bar{height:6px;background:var(--ink);border-radius:3px;overflow:hidden;margin:6px 0}
+.bar > div{height:100%;background:var(--brass);transition:width 0.3s}
+.bar > div.green{background:var(--green)}.bar > div.red{background:var(--red)}.bar > div.amber{background:var(--amber)}
+.tag{display:inline-block;padding:2px 7px;border-radius:11px;font-family:var(--mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--brass);color:var(--brass);margin-right:4px;white-space:nowrap}
+.tag.amber{border-color:var(--amber);color:var(--amber)}
+.tag.green{border-color:var(--green);color:var(--green)}
+.tag.red{border-color:var(--red);color:var(--red)}
+.tag.blue{border-color:var(--blue);color:var(--blue)}
+.tag.purple{border-color:var(--purple);color:var(--purple)}
+.tag.muted{border-color:var(--cream-muted);color:var(--cream-muted)}
+.empty{padding:24px;text-align:center;color:var(--cream-muted);font-style:italic;font-size:12px}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow-y:auto;padding:6px}
+.msg{padding:10px 14px;border-radius:6px;max-width:88%;font-size:13px;line-height:1.55;white-space:pre-wrap}
+.msg.user{background:var(--ink);align-self:flex-end;border-bottom-right-radius:2px}
+.msg.bot{background:var(--void-2);border:1px solid var(--line);border-left:2px solid var(--brass);align-self:flex-start;border-bottom-left-radius:2px}
+.msg.bot .src{font-family:var(--mono);font-size:10px;color:var(--cream-muted);letter-spacing:0.08em;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
+.chat-input{display:flex;gap:8px;margin-top:10px}
+.chat-input input{flex:1;padding:11px 14px}
+.palette-bg,.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;align-items:flex-start;justify-content:center;padding-top:14vh;z-index:900;backdrop-filter:blur(4px)}
+.palette-bg.open,.modal-bg.open{display:flex}
+.modal-bg{align-items:center;padding:18px}
+.palette{background:var(--void-2);border:1px solid var(--brass);border-radius:5px;width:min(640px,90%);box-shadow:0 18px 50px rgba(0,0,0,0.7);overflow:hidden}
+.palette-hd{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.palette-hd .glyph{font-family:var(--serif);font-size:18px;color:var(--brass)}
+.palette-hd input{flex:1;border:none;background:transparent;font-size:15px;padding:4px}
+.palette-bd{max-height:50vh;overflow:auto;padding:8px}
+.modal{background:var(--void-2);border:1px solid var(--brass);border-radius:4px;padding:22px;max-width:760px;width:100%;max-height:90vh;overflow:auto}
+.modal h2{font-family:var(--serif);font-size:17px;margin-bottom:14px}
+.modal .actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brass);color:var(--void);padding:9px 18px;border-radius:3px;font-family:var(--mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;opacity:0;transition:all 0.22s;z-index:1100;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.barchart{display:flex;align-items:flex-end;gap:8px;height:140px;padding:8px 0;border-bottom:1px solid var(--line-soft);margin-bottom:8px}
+.barchart .b{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+.barchart .b .bar2{width:100%;min-height:2px;display:flex;flex-direction:column-reverse;border-radius:2px;overflow:hidden}
+.barchart .b .seg{width:100%;min-height:1px}
+.barchart .b .lab{font-family:var(--mono);font-size:9px;color:var(--cream-muted);letter-spacing:0.06em;text-transform:uppercase;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;color:var(--cream-dim);margin-top:6px}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.checklist{list-style:none;padding:0}
+.checklist li{padding:6px 0;border-bottom:1px dashed var(--line-soft);font-size:13px;display:flex;align-items:flex-start;gap:8px}
+.checklist li:last-child{border-bottom:none}
+.checklist li input{margin-top:3px}
+.funnel{display:flex;gap:4px;align-items:flex-end;margin:14px 0;height:160px}
+.funnel .stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px}
+.funnel .bar3{width:80%;background:linear-gradient(180deg,var(--brass),var(--ox));border-radius:3px 3px 0 0;min-height:6px;display:flex;align-items:flex-start;justify-content:center;padding-top:4px;font-family:var(--mono);font-size:11px;color:var(--void);font-weight:700}
+.funnel .lab{font-family:var(--mono);font-size:9px;color:var(--cream-muted);letter-spacing:0.06em;text-transform:uppercase;text-align:center}
+@media (max-width:760px){nav.tabs button{padding:0 11px;font-size:11px}main{padding:14px 14px 50px}.row,.row3{grid-template-columns:1fr}.grid,.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand">
+    <div class="mark">◊</div>
+    <div><div class="name">FallMortgagePractice</div></div>
+    <div class="seal">v1 · prime 881</div>
+  </div>
+  <nav class="tabs" id="tabNav"></nav>
+  <div class="tools-r">
+    <button class="tool-btn primary" onclick="openPalette()" title="ask · Ctrl+K">◊ ask</button>
+    <button class="tool-btn" id="tierBadge" onclick="openModal('settings')">T0</button>
+    <button class="tool-btn" onclick="openModal('settings')">cog</button>
+  </div>
+</header>
+<main id="view"></main>
+</div>
+<div class="palette-bg" id="palette">
+  <div class="palette">
+    <div class="palette-hd">
+      <span class="glyph">◊</span>
+      <input type="text" id="pInput" placeholder="ask · 'what is clawback?' · 'PI minimum cover broker?' · 'proc fee disclosure'">
+      <span id="pTier" style="font-family:var(--mono);font-size:10px;color:var(--cream-muted)">T0</span>
+    </div>
+    <div class="palette-bd" id="pBody"></div>
+  </div>
+</div>
+<div class="modal-bg" id="modal">
+  <div class="modal"><h2 id="modalTitle">.</h2><div id="modalBody"></div></div>
+</div>
+<div class="toast" id="toast">.</div>
+<script>
+'use strict';
+// ════════════════════════════════════════════════════════════════
+// FallMortgagePractice v1.0.0 · sovereign UK mortgage broker firm accounting · MIT
+// ◊·κ=1 · prime 881 · firm-side: procuration · clawback · pipeline · PI · network levy
+// TOOL · NOT REGULATED ADVICE · FCA submissions remain firm's responsibility
+// ════════════════════════════════════════════════════════════════
+const TOOLNAME='fallmortgagepractice';
+const VERSION='1.0.0';
+const PRIME=881;
+const STORE='fallmortgagepractice-v1';
+const TAX_YEAR='2025-26';
+
+// UK mortgage-broker rule constants (calibrated 2025-26)
+const RULES={
+  procFeeTypicalPct:0.0035,         // ~0.35% of loan · typical lender procuration fee
+  procFeeBTLTypicalPct:0.005,       // BTL typically higher (~0.5%)
+  clawbackWindowMonthsTypical:24,   // most lenders 24m, some 36m
+  clawbackWindowMonthsMin:12,
+  clawbackWindowMonthsMax:36,
+  piMinCoverSingleBroker:1300000,   // €1.3m equiv · MCD/IDD-aligned single claim
+  piMinCoverAggregateBroker:1924000,// €1.924m equiv aggregate
+  piSyscMinBroker:1500000,          // SYSC practical floor £1.5m
+  fcaFeeMinimum:1500,               // small-firm minimum periodic fee
+  fcaFeeBlockA18:0,                 // A.18 (home finance) fee block
+  networkLevyTypicalPct:0.20,       // 15-30% retained by network for AR firms
+  invoiceTermsDays:14,
+  cpdHoursPerYear:15,               // FCA 15 hrs/yr for mortgage advisers
+  cancelCoolingOffDays:14,          // standard cooling-off period for protection
+  vatStandard:0.20,
+  vatRegThreshold:90000,
+  staleReceivableDays:90,           // write-off candidate threshold
+  fosTimeBarYears:6,                // FOS reach via FCA SYSC
+  recordRetentionYears:7,           // practical default · 6 SYSC + 3 post-completion FOS
+  fcaFeeQuarterMonth:7,
+};
+
+const TABS=[
+  {id:'dashboard',label:'◊ dashboard'},
+  {id:'pipeline',label:'pipeline'},
+  {id:'procuration',label:'procuration'},
+  {id:'broker-fees',label:'broker fees'},
+  {id:'protection',label:'protection'},
+  {id:'clawback',label:'clawback'},
+  {id:'schedules',label:'schedules'},
+  {id:'clients',label:'clients'},
+  {id:'advisers',label:'advisers'},
+  {id:'firm-pl',label:'firm P&L'},
+  {id:'expenses',label:'expenses'},
+  {id:'compliance',label:'compliance'},
+  {id:'qa',label:'Q&A'},
+];
+
+let state={
+  active:'dashboard',
+  selectedClientId:null,
+  selectedAdviserId:null,
+  selectedCaseId:null,
+  firm:null,
+  clients:[],
+  advisers:[],
+  cases:[],
+  procurationFees:[],
+  brokerFees:[],
+  protectionCommissions:[],
+  clawbackEvents:[],
+  feeSchedules:[],
+  expenses:[],
+  chat:[],
+  audit:[],
+  settings:{
+    anthropicKey:'',geminiKey:'',openaiKey:'',openrouterKey:'',
+    auditChain:true,
+    piAnnualPremium:0,
+    fcaAnnualEstimate:1500,
+    networkLevyPct:0,
+    networkName:'',
+    arOrDa:'DA',
+    bankDetails:'',
+    demoLoaded:false,
+  },
+};
+
+// ─── util ───
+const $=(s,p=document)=>p.querySelector(s);
+const $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
+const uid=p=>(p||'')+Math.random().toString(36).slice(2,11);
+const now=()=>Date.now();
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>(+n||0).toLocaleString('en-GB',{minimumFractionDigits:0,maximumFractionDigits:0});
+const money=n=>'£'+fmt(n);
+const moneyP=n=>'£'+(+n||0).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct=n=>((+n||0)*100).toFixed(1)+'%';
+const isoDate=ts=>new Date(ts||Date.now()).toISOString().slice(0,10);
+const monthKey=ts=>new Date(ts||Date.now()).toISOString().slice(0,7);
+const dayMs=86400000;
+const daysBetween=(a,b)=>Math.floor((b-a)/dayMs);
+const monthsBetween=(a,b)=>{const d1=new Date(a),d2=new Date(b);return (d2.getFullYear()-d1.getFullYear())*12+(d2.getMonth()-d1.getMonth())}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._to);t._to=setTimeout(()=>t.classList.remove('show'),1900)}
+async function sha256(s){const buf=new TextEncoder().encode(String(s));const h=await crypto.subtle.digest('SHA-256',buf);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')}
+
+// ─── IDB ───
+let db;
+const STORES=['state','clients','advisers','firms','cases','procurationFees','brokerFees','protectionCommissions','clawbackEvents','feeSchedules','expenses','audit'];
+function openDB(){return new Promise((res,rej)=>{
+  const r=indexedDB.open(STORE,1);
+  r.onupgradeneeded=e=>{const d=e.target.result;for(const s of STORES){if(!d.objectStoreNames.contains(s)){d.createObjectStore(s,{keyPath:'id'})}}};
+  r.onsuccess=e=>{db=e.target.result;res(db)};
+  r.onerror=()=>rej(r.error);
+});}
+function txStore(name,mode='readonly'){const tx=db.transaction(name,mode);return tx.objectStore(name)}
+function idbPut(store,val){return new Promise(r=>{const req=txStore(store,'readwrite').put(val);req.onsuccess=()=>r(true);req.onerror=()=>r(false)})}
+function idbDel(store,key){return new Promise(r=>{const req=txStore(store,'readwrite').delete(key);req.onsuccess=()=>r(true)})}
+function idbGetAll(store){return new Promise(r=>{const req=txStore(store).getAll();req.onsuccess=()=>r(req.result||[]);req.onerror=()=>r([])})}
+function idbGet(store,key){return new Promise(r=>{const req=txStore(store).get(key);req.onsuccess=()=>r(req.result);req.onerror=()=>r(null)})}
+
+async function appendAudit(action,reasoning,payload){
+  if(!state.settings.auditChain)return;
+  const prev=state.audit.length?state.audit[state.audit.length-1]:null;
+  const prevHash=prev?prev.hash:'';
+  const docStr=JSON.stringify(payload||{});
+  const docHash=await sha256(docStr);
+  const i=(prev?prev.i:0)+1;
+  const ts=Date.now();
+  const hash=await sha256(prevHash+docHash+ts+i);
+  const entry={id:'au_'+i+'_'+ts,i,ts,tool:TOOLNAME,configVersion:TOOLNAME+'@'+VERSION,adviserId:'',clientId:payload?.clientId||'',action,reasoning:reasoning||'',prevHash,docHash,hash,payload:payload||{}};
+  state.audit.push(entry);
+  if(state.audit.length>5000)state.audit=state.audit.slice(-5000);
+  await idbPut('audit',entry);
+}
+
+async function saveState(){
+  await idbPut('state',{id:'singleton',active:state.active,selectedClientId:state.selectedClientId,selectedAdviserId:state.selectedAdviserId,selectedCaseId:state.selectedCaseId,settings:state.settings,chat:state.chat});
+}
+async function loadAll(){
+  await openDB();
+  const s=await idbGet('state','singleton');
+  if(s){state.active=s.active||state.active;state.selectedClientId=s.selectedClientId||null;state.selectedAdviserId=s.selectedAdviserId||null;state.selectedCaseId=s.selectedCaseId||null;state.settings=Object.assign({},state.settings,s.settings||{});state.chat=s.chat||[]}
+  state.clients=await idbGetAll('clients');
+  state.advisers=await idbGetAll('advisers');
+  const firms=await idbGetAll('firms');state.firm=firms[0]||null;
+  state.cases=await idbGetAll('cases');
+  state.procurationFees=await idbGetAll('procurationFees');
+  state.brokerFees=await idbGetAll('brokerFees');
+  state.protectionCommissions=await idbGetAll('protectionCommissions');
+  state.clawbackEvents=await idbGetAll('clawbackEvents');
+  state.feeSchedules=await idbGetAll('feeSchedules');
+  state.expenses=await idbGetAll('expenses');
+  state.audit=await idbGetAll('audit');
+  try{const ls=localStorage.getItem(STORE+'.settings');if(ls&&!s){state.settings=Object.assign({},state.settings,JSON.parse(ls))}}catch(e){}
+}
+function persistSettingsLS(){try{localStorage.setItem(STORE+'.settings',JSON.stringify(state.settings))}catch(e){}}
+
+// ─── BroadcastChannel mesh ───
+let bcMortgage,bcSignal;
+function initMesh(){
+  try{bcSignal=new BroadcastChannel('fall-signal');bcSignal.postMessage({source:TOOLNAME,type:'hello',prime:PRIME,version:VERSION,ts:now()});bcSignal.addEventListener('message',e=>{const m=e.data;if(m?.type==='ping')bcSignal.postMessage({source:TOOLNAME,type:'pong',prime:PRIME})})}catch(e){}
+  try{bcMortgage=new BroadcastChannel('fall-mortgage');bcMortgage.addEventListener('message',handleMesh);bcMortgage.postMessage({v:1,type:'sync.request',ts:now(),source:TOOLNAME,payload:{wants:['clients','advisers','firm','cases']}})}catch(e){}
+}
+function meshBroadcast(type,payload){if(!bcMortgage)return;try{bcMortgage.postMessage({v:1,type,ts:now(),source:TOOLNAME,payload})}catch(e){}}
+async function handleMesh(e){
+  const m=e.data;if(!m||m.source===TOOLNAME)return;
+  if(m.type==='sync.snapshot'){
+    const p=m.payload||{};let dirty=false;
+    if(Array.isArray(p.clients))for(const c of p.clients){if(!state.clients.find(x=>x.id===c.id)){state.clients.push(c);await idbPut('clients',c);dirty=true;}}
+    if(Array.isArray(p.advisers))for(const a of p.advisers){if(!state.advisers.find(x=>x.id===a.id)){state.advisers.push(a);await idbPut('advisers',a);dirty=true;}}
+    if(p.firm&&!state.firm){state.firm=p.firm;await idbPut('firms',p.firm);dirty=true;}
+    if(dirty)render();
+  }else if(m.type==='sync.request'){
+    meshBroadcast('sync.snapshot',{clients:state.clients,advisers:state.advisers,firm:state.firm,cases:state.cases});
+  }
+}
+
+// ─── Pipeline stages ───
+const STAGES=['lead','dip','applied','offered','exchanged','completed','declined','withdrawn'];
+const STAGE_LABELS={lead:'Lead',dip:'DIP',applied:'Applied',offered:'Offered',exchanged:'Exchanged',completed:'Completed',declined:'Declined',withdrawn:'Withdrawn'};
+const STAGE_ACTIVE=['lead','dip','applied','offered','exchanged'];
+
+// ─── Case factory ───
+function newCase(){
+  return {id:uid('cs'),ts:now(),updatedAt:now(),clientId:'',adviserId:'',
+    clientName:'',lender:'',product:'',loanAmount:0,propertyValue:0,ltv:0,term:25,
+    mortgageType:'purchase',repayment:'capital-and-interest',rate:0,rateType:'fixed',
+    stage:'lead',stageDate:now(),
+    procFee:0,procFeePaid:false,procFeeDate:null,
+    brokerFee:0,brokerFeePaid:false,brokerFeeDate:null,brokerFeeType:'fixed',
+    protectionProvider:'',protectionPremium:0,protectionCommission:0,protectionPaid:false,
+    completionDate:null,clawbackExpiry:null,clawbackMonths:24,
+    notes:'',isDemo:false,
+  };
+}
+
+// ─── Save helpers ───
+async function saveCase(c,action){c.updatedAt=now();c.ltv=c.propertyValue?(c.loanAmount/c.propertyValue):0;const idx=state.cases.findIndex(x=>x.id===c.id);if(idx>=0)state.cases[idx]=c;else state.cases.push(c);await idbPut('cases',c);await appendAudit(action||'case.saved','',{caseId:c.id,stage:c.stage});meshBroadcast('case.updated',c);}
+async function saveFirm(f){f.updatedAt=now();state.firm=f;await idbPut('firms',f);await appendAudit('firm.saved','',{firmId:f.id});}
+async function saveAdviser(a){a.updatedAt=now();const idx=state.advisers.findIndex(x=>x.id===a.id);if(idx>=0)state.advisers[idx]=a;else state.advisers.push(a);await idbPut('advisers',a);await appendAudit('adviser.saved','',{adviserId:a.id});}
+async function saveProcFee(p){p.updatedAt=now();const idx=state.procurationFees.findIndex(x=>x.id===p.id);if(idx>=0)state.procurationFees[idx]=p;else state.procurationFees.push(p);await idbPut('procurationFees',p);await appendAudit('proc.saved','',{id:p.id,amount:p.amount});}
+async function saveBrokerFee(b){b.updatedAt=now();const idx=state.brokerFees.findIndex(x=>x.id===b.id);if(idx>=0)state.brokerFees[idx]=b;else state.brokerFees.push(b);await idbPut('brokerFees',b);await appendAudit('brokerfee.saved','',{id:b.id,amount:b.amount});}
+async function saveProtection(p){p.updatedAt=now();const idx=state.protectionCommissions.findIndex(x=>x.id===p.id);if(idx>=0)state.protectionCommissions[idx]=p;else state.protectionCommissions.push(p);await idbPut('protectionCommissions',p);await appendAudit('protection.saved','',{id:p.id});}
+async function saveClawback(c){c.updatedAt=now();const idx=state.clawbackEvents.findIndex(x=>x.id===c.id);if(idx>=0)state.clawbackEvents[idx]=c;else state.clawbackEvents.push(c);await idbPut('clawbackEvents',c);await appendAudit('clawback.saved','',{id:c.id,amount:c.amount});}
+async function saveExpense(e){e.updatedAt=now();const idx=state.expenses.findIndex(x=>x.id===e.id);if(idx>=0)state.expenses[idx]=e;else state.expenses.push(e);await idbPut('expenses',e);await appendAudit('expense.saved','',{id:e.id});}
+
+// ─── Revenue calcs ───
+function totalProcFees(paid){return state.procurationFees.filter(p=>paid?p.paid:true).reduce((s,p)=>s+(+p.amount||0),0);}
+function totalBrokerFees(paid){return state.brokerFees.filter(b=>paid?b.paid:true).reduce((s,b)=>s+(+b.amount||0),0);}
+function totalProtectionComm(paid){return state.protectionCommissions.filter(p=>paid?p.paid:true).reduce((s,p)=>s+(+p.commission||0),0);}
+function totalClawbacks(){return state.clawbackEvents.reduce((s,c)=>s+(+c.amount||0),0);}
+function totalExpenses(){return state.expenses.reduce((s,e)=>s+(+e.amount||0),0);}
+function grossRevenue(){return totalProcFees()+totalBrokerFees()+totalProtectionComm();}
+function netRevenue(){return grossRevenue()-totalClawbacks();}
+function netProfit(){return netRevenue()-totalExpenses()-(+state.settings.piAnnualPremium||0)-(+state.settings.fcaAnnualEstimate||0);}
+function adviserRevenue(advId){return state.procurationFees.filter(p=>p.adviserId===advId).reduce((s,p)=>s+(+p.amount||0),0)+state.brokerFees.filter(b=>b.adviserId===advId).reduce((s,b)=>s+(+b.amount||0),0)+state.protectionCommissions.filter(p=>p.adviserId===advId).reduce((s,p)=>s+(+p.commission||0),0);}
+
+// ─── RENDER ───
+function render(){renderTabs();const v=$('#view');
+  switch(state.active){
+    case 'dashboard':return renderDashboard(v);case 'pipeline':return renderPipeline(v);
+    case 'procuration':return renderProcuration(v);case 'broker-fees':return renderBrokerFees(v);
+    case 'protection':return renderProtection(v);case 'clawback':return renderClawback(v);
+    case 'schedules':return renderSchedules(v);case 'clients':return renderClients(v);
+    case 'advisers':return renderAdvisers(v);case 'firm-pl':return renderFirmPL(v);
+    case 'expenses':return renderExpenses(v);case 'compliance':return renderCompliance(v);
+    case 'qa':return renderQA(v);default:renderDashboard(v);
+  }
+}
+function renderTabs(){const nav=$('#tabNav');nav.innerHTML=TABS.map(t=>`<button class="${state.active===t.id?'active':''}" onclick="switchTab('${t.id}')">${t.label}</button>`).join('');}
+function switchTab(id){state.active=id;saveState();render();}
+
+// ─── DASHBOARD ───
+function renderDashboard(v){
+  const active=state.cases.filter(c=>STAGE_ACTIVE.includes(c.stage));
+  const completed=state.cases.filter(c=>c.stage==='completed');
+  const pipelineValue=active.reduce((s,c)=>s+(+c.loanAmount||0),0);
+  const procRev=totalProcFees();const brokerRev=totalBrokerFees();const protRev=totalProtectionComm();
+  const clawRev=totalClawbacks();const expTotal=totalExpenses();const net=netProfit();
+  const clawbackRisk=state.cases.filter(c=>c.stage==='completed'&&c.clawbackExpiry&&c.clawbackExpiry>now()).reduce((s,c)=>s+(+c.procFee||0),0);
+  v.innerHTML=`
+    <div class="disclaimer"><strong>◊ Regulatory notice:</strong> FallMortgagePractice is a firm-side accounting tool. It does not replace your accountant, FCA reporting obligations, or network submissions. Procuration fees, broker fees, and commissions must be disclosed to clients per MCOB 4.4A. All data is device-local.</div>
+    <div class="section-h"><h2>Dashboard</h2><div class="sub">${TAX_YEAR} · prime ${PRIME}</div></div>
+    <div class="grid">
+      <div class="card"><h3>Pipeline</h3>
+        <div class="kpi"><span class="l">Active cases</span><span class="v brass">${active.length}</span></div>
+        <div class="kpi"><span class="l">Pipeline value</span><span class="v brass">${money(pipelineValue)}</span></div>
+        <div class="kpi"><span class="l">Completed</span><span class="v green">${completed.length}</span></div>
+        <div class="kpi"><span class="l">Total cases</span><span class="v">${state.cases.length}</span></div>
+      </div>
+      <div class="card"><h3>Revenue</h3>
+        <div class="kpi"><span class="l">Procuration fees</span><span class="v green">${moneyP(procRev)}</span></div>
+        <div class="kpi"><span class="l">Broker fees</span><span class="v green">${moneyP(brokerRev)}</span></div>
+        <div class="kpi"><span class="l">Protection comm</span><span class="v green">${moneyP(protRev)}</span></div>
+        <div class="kpi"><span class="l">Gross revenue</span><span class="v brass">${moneyP(grossRevenue())}</span></div>
+      </div>
+      <div class="card"><h3>Costs & Net</h3>
+        <div class="kpi"><span class="l">Clawbacks</span><span class="v red">${moneyP(clawRev)}</span></div>
+        <div class="kpi"><span class="l">Expenses</span><span class="v red">${moneyP(expTotal)}</span></div>
+        <div class="kpi"><span class="l">PI premium</span><span class="v">${moneyP(state.settings.piAnnualPremium||0)}</span></div>
+        <div class="kpi"><span class="l">FCA levy</span><span class="v">${moneyP(state.settings.fcaAnnualEstimate||0)}</span></div>
+        <div class="kpi"><span class="l">Net profit</span><span class="v ${net>=0?'green':'red'}">${moneyP(net)}</span></div>
+      </div>
+      <div class="card"><h3>Risk</h3>
+        <div class="kpi"><span class="l">Clawback exposure</span><span class="v ${clawbackRisk>0?'amber':'green'}">${moneyP(clawbackRisk)}</span></div>
+        <div class="kpi"><span class="l">Cases in window</span><span class="v">${state.cases.filter(c=>c.clawbackExpiry&&c.clawbackExpiry>now()).length}</span></div>
+        <div class="kpi"><span class="l">Avg proc fee</span><span class="v">${completed.length?moneyP(procRev/completed.length):'—'}</span></div>
+        <div class="kpi"><span class="l">Advisers</span><span class="v">${state.advisers.length}</span></div>
+      </div>
+    </div>`;
+}
+
+// ─── PIPELINE ───
+function renderPipeline(v){
+  const byStage={};STAGES.forEach(s=>byStage[s]=[]);
+  state.cases.forEach(c=>(byStage[c.stage]||[]).push(c));
+  const maxCount=Math.max(1,...STAGES.map(s=>byStage[s].length));
+  v.innerHTML=`
+    <div class="section-h"><h2>Pipeline</h2><div class="actions"><button class="btn primary" onclick="openModal('addcase')">+ case</button></div></div>
+    <div class="funnel">${STAGES.map(s=>{const n=byStage[s].length;const h=Math.max(6,(n/maxCount)*140);return `<div class="stage"><div class="bar3" style="height:${h}px">${n}</div><div class="lab">${STAGE_LABELS[s]}</div></div>`;}).join('')}</div>
+    <table><thead><tr><th>Client</th><th>Lender</th><th>Loan</th><th>Stage</th><th>Proc</th><th>Broker</th><th>Updated</th></tr></thead><tbody>
+    ${state.cases.sort((a,b)=>b.updatedAt-a.updatedAt).map(c=>`<tr class="clickable" onclick="editCase('${c.id}')"><td>${esc(c.clientName)}${c.isDemo?' <span class="tag muted">demo</span>':''}</td><td>${esc(c.lender)}</td><td class="r">${moneyP(c.loanAmount)}</td><td><span class="tag ${c.stage==='completed'?'green':c.stage==='declined'||c.stage==='withdrawn'?'red':''}">${c.stage}</span></td><td class="r">${moneyP(c.procFee)}</td><td class="r">${moneyP(c.brokerFee)}</td><td class="mono">${isoDate(c.updatedAt)}</td></tr>`).join('')}
+    </tbody></table>`;
+}
+
+// ─── PROCURATION ───
+function renderProcuration(v){
+  const total=totalProcFees();const paid=totalProcFees(true);const outstanding=total-paid;
+  v.innerHTML=`
+    <div class="section-h"><h2>Procuration Fees</h2><div class="actions"><button class="btn primary" onclick="openModal('addproc')">+ proc fee</button></div></div>
+    <div class="grid" style="margin-bottom:18px">
+      <div class="card"><div class="kpi"><span class="l">Total</span><span class="v brass">${moneyP(total)}</span></div></div>
+      <div class="card"><div class="kpi"><span class="l">Paid</span><span class="v green">${moneyP(paid)}</span></div></div>
+      <div class="card"><div class="kpi"><span class="l">Outstanding</span><span class="v ${outstanding>0?'amber':'green'}">${moneyP(outstanding)}</span></div></div>
+    </div>
+    <table><thead><tr><th>Date</th><th>Client</th><th>Lender</th><th>Loan</th><th>Fee</th><th>Rate</th><th>Paid</th><th>Adviser</th></tr></thead><tbody>
+    ${state.procurationFees.sort((a,b)=>b.ts-a.ts).map(p=>{const adv=state.advisers.find(a=>a.id===p.adviserId);return `<tr><td class="mono">${isoDate(p.ts)}</td><td>${esc(p.clientName)}</td><td>${esc(p.lender)}</td><td class="r">${moneyP(p.loanAmount)}</td><td class="r">${moneyP(p.amount)}</td><td class="r">${pct(p.rate)}</td><td>${p.paid?'<span class="tag green">paid</span>':'<span class="tag amber">due</span>'}</td><td>${esc(adv?.name||'')}</td></tr>`;}).join('')}
+    </tbody></table>`;
+}
+
+// ─── BROKER FEES ───
+function renderBrokerFees(v){
+  const total=totalBrokerFees();const paid=totalBrokerFees(true);
+  v.innerHTML=`
+    <div class="section-h"><h2>Broker Fees</h2><div class="actions"><button class="btn primary" onclick="openModal('addbrokerfee')">+ broker fee</button></div></div>
+    <div class="grid" style="margin-bottom:18px">
+      <div class="card"><div class="kpi"><span class="l">Total</span><span class="v brass">${moneyP(total)}</span></div></div>
+      <div class="card"><div class="kpi"><span class="l">Paid</span><span class="v green">${moneyP(paid)}</span></div></div>
+      <div class="card"><div class="kpi"><span class="l">Outstanding</span><span class="v ${total-paid>0?'amber':'green'}">${moneyP(total-paid)}</span></div></div>
+    </div>
+    <table><thead><tr><th>Date</th><th>Client</th><th>Amount</th><th>Type</th><th>Trigger</th><th>Paid</th><th>Adviser</th></tr></thead><tbody>
+    ${state.brokerFees.sort((a,b)=>b.ts-a.ts).map(b=>{const adv=state.advisers.find(a=>a.id===b.adviserId);return `<tr><td class="mono">${isoDate(b.ts)}</td><td>${esc(b.clientName)}</td><td class="r">${moneyP(b.amount)}</td><td>${esc(b.feeType||'fixed')}</td><td>${esc(b.trigger||'application')}</td><td>${b.paid?'<span class="tag green">paid</span>':'<span class="tag amber">due</span>'}</td><td>${esc(adv?.name||'')}</td></tr>`;}).join('')}
+    </tbody></table>`;
+}
+
+// ─── PROTECTION ───
+function renderProtection(v){
+  const total=totalProtectionComm();
+  v.innerHTML=`
+    <div class="section-h"><h2>Protection Commissions</h2><div class="actions"><button class="btn primary" onclick="openModal('addprotection')">+ commission</button></div></div>
+    <div class="card" style="margin-bottom:18px"><div class="kpi"><span class="l">Total commissions</span><span class="v brass">${moneyP(total)}</span></div></div>
+    <table><thead><tr><th>Date</th><th>Client</th><th>Provider</th><th>Product</th><th>Premium</th><th>Commission</th><th>Paid</th></tr></thead><tbody>
+    ${state.protectionCommissions.sort((a,b)=>b.ts-a.ts).map(p=>`<tr><td class="mono">${isoDate(p.ts)}</td><td>${esc(p.clientName)}</td><td>${esc(p.provider)}</td><td>${esc(p.product)}</td><td class="r">${moneyP(p.premium)}</td><td class="r">${moneyP(p.commission)}</td><td>${p.paid?'<span class="tag green">paid</span>':'<span class="tag amber">due</span>'}</td></tr>`).join('')}
+    </tbody></table>`;
+}
+
+// ─── CLAWBACK ───
+function renderClawback(v){
+  const total=totalClawbacks();
+  const atRisk=state.cases.filter(c=>c.stage==='completed'&&c.clawbackExpiry&&c.clawbackExpiry>now());
+  v.innerHTML=`
+    <div class="section-h"><h2>Clawback</h2><div class="actions"><button class="btn primary" onclick="openModal('addclawback')">+ clawback event</button></div></div>
+    <div class="grid" style="margin-bottom:18px">
+      <div class="card"><div class="kpi"><span class="l">Clawbacks incurred</span><span class="v red">${moneyP(total)}</span></div></div>
+      <div class="card"><div class="kpi"><span class="l">Cases in clawback window</span><span class="v amber">${atRisk.length}</span></div></div>
+      <div class="card"><div class="kpi"><span class="l">At-risk exposure</span><span class="v amber">${moneyP(atRisk.reduce((s,c)=>s+(+c.procFee||0),0))}</span></div></div>
+    </div>
+    ${state.clawbackEvents.length?`<table><thead><tr><th>Date</th><th>Client</th><th>Lender</th><th>Amount</th><th>Reason</th></tr></thead><tbody>${state.clawbackEvents.sort((a,b)=>b.ts-a.ts).map(c=>`<tr><td class="mono">${isoDate(c.ts)}</td><td>${esc(c.clientName)}</td><td>${esc(c.lender)}</td><td class="r red">${moneyP(c.amount)}</td><td>${esc(c.reason)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">No clawback events recorded</div>'}
+    ${atRisk.length?`<h3 style="font-family:var(--serif);margin:22px 0 10px">Cases in Clawback Window</h3><table><thead><tr><th>Client</th><th>Lender</th><th>Proc fee</th><th>Window</th><th>Expiry</th></tr></thead><tbody>${atRisk.map(c=>`<tr><td>${esc(c.clientName)}</td><td>${esc(c.lender)}</td><td class="r">${moneyP(c.procFee)}</td><td>${c.clawbackMonths}m</td><td class="mono">${isoDate(c.clawbackExpiry)}</td></tr>`).join('')}</tbody></table>`:''}`;
+}
+
+// ─── SCHEDULES (fee schedule templates) ───
+function renderSchedules(v){
+  v.innerHTML=`
+    <div class="section-h"><h2>Fee Schedules</h2><div class="actions"><button class="btn primary" onclick="openModal('addschedule')">+ schedule</button></div></div>
+    ${state.feeSchedules.length?`<table><thead><tr><th>Name</th><th>Broker fee</th><th>Trigger</th><th>Type</th><th>Notes</th></tr></thead><tbody>${state.feeSchedules.map(s=>`<tr><td>${esc(s.name)}</td><td class="r">${moneyP(s.brokerFee)}</td><td>${esc(s.trigger)}</td><td>${esc(s.type)}</td><td>${esc(s.notes)}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">No fee schedules. Add one to standardize client fee structures.</div>'}`;
+}
+
+// ─── CLIENTS ───
+function renderClients(v){
+  v.innerHTML=`
+    <div class="section-h"><h2>Clients</h2><div class="sub">${state.clients.length} total</div></div>
+    ${state.clients.length?`<table><thead><tr><th>Name</th><th>Cases</th><th>Revenue</th><th>Added</th></tr></thead><tbody>
+    ${state.clients.map(c=>{const cases=state.cases.filter(x=>x.clientId===c.id);const rev=state.procurationFees.filter(p=>p.clientId===c.id).reduce((s,p)=>s+(+p.amount||0),0)+state.brokerFees.filter(b=>b.clientId===c.id).reduce((s,b)=>s+(+b.amount||0),0);
+    return `<tr><td>${esc(c.name||((c.applicant1?.firstName||'')+' '+(c.applicant1?.lastName||'')).trim()||c.id.slice(0,8))}${c.isDemo?' <span class="tag muted">demo</span>':''}</td><td>${cases.length}</td><td class="r">${moneyP(rev)}</td><td class="mono">${isoDate(c.ts)}</td></tr>`;}).join('')}</tbody></table>`:'<div class="empty">No clients. Cases and clients sync from fallmortgage / fallmortgageonboard via BroadcastChannel.</div>'}`;
+}
+
+// ─── ADVISERS ───
+function renderAdvisers(v){
+  v.innerHTML=`
+    <div class="section-h"><h2>Advisers</h2><div class="actions"><button class="btn primary" onclick="openModal('addadviser')">+ adviser</button></div></div>
+    ${state.advisers.length?`<div class="grid2">${state.advisers.map(a=>{const rev=adviserRevenue(a.id);const cases=state.cases.filter(c=>c.adviserId===a.id);const completed=cases.filter(c=>c.stage==='completed').length;
+    return `<div class="card"><h3>${esc(a.name)} <span class="meta">${esc(a.fcaRefNo||'')}</span></h3>
+      <div class="kpi"><span class="l">Revenue</span><span class="v green">${moneyP(rev)}</span></div>
+      <div class="kpi"><span class="l">Cases</span><span class="v">${cases.length}</span></div>
+      <div class="kpi"><span class="l">Completed</span><span class="v">${completed}</span></div>
+      <div class="kpi"><span class="l">Avg per case</span><span class="v">${completed?moneyP(rev/completed):'—'}</span></div>
+      <div class="kpi"><span class="l">Qualification</span><span class="v">${esc(a.qualification||'CeMAP')}</span></div>
+    </div>`;}).join('')}</div>`:'<div class="empty">No advisers. Add one to track per-adviser P&L.</div>'}`;
+}
+
+// ─── FIRM P&L ───
+function renderFirmPL(v){
+  const proc=totalProcFees();const broker=totalBrokerFees();const prot=totalProtectionComm();
+  const gross=grossRevenue();const claw=totalClawbacks();const exp=totalExpenses();
+  const pi=+state.settings.piAnnualPremium||0;const fca=+state.settings.fcaAnnualEstimate||0;
+  const networkPct=+state.settings.networkLevyPct||0;const networkLevy=gross*networkPct;
+  const totalCosts=claw+exp+pi+fca+networkLevy;
+  const net=gross-totalCosts;
+  v.innerHTML=`
+    <div class="section-h"><h2>Firm P&L</h2><div class="sub">${TAX_YEAR}</div></div>
+    <div class="grid2">
+      <div class="card"><h3>Revenue</h3>
+        <div class="kpi"><span class="l">Procuration fees</span><span class="v green">${moneyP(proc)}</span></div>
+        <div class="kpi"><span class="l">Broker fees</span><span class="v green">${moneyP(broker)}</span></div>
+        <div class="kpi"><span class="l">Protection commissions</span><span class="v green">${moneyP(prot)}</span></div>
+        <div class="kpi" style="border-top:2px solid var(--brass);padding-top:8px"><span class="l"><strong>Gross revenue</strong></span><span class="v brass"><strong>${moneyP(gross)}</strong></span></div>
+      </div>
+      <div class="card"><h3>Costs</h3>
+        <div class="kpi"><span class="l">Clawbacks</span><span class="v red">${moneyP(claw)}</span></div>
+        <div class="kpi"><span class="l">Expenses</span><span class="v red">${moneyP(exp)}</span></div>
+        <div class="kpi"><span class="l">PI premium</span><span class="v">${moneyP(pi)}</span></div>
+        <div class="kpi"><span class="l">FCA levy</span><span class="v">${moneyP(fca)}</span></div>
+        ${networkPct>0?`<div class="kpi"><span class="l">Network levy (${pct(networkPct)})</span><span class="v">${moneyP(networkLevy)}</span></div>`:''}
+        <div class="kpi" style="border-top:2px solid var(--ox);padding-top:8px"><span class="l"><strong>Total costs</strong></span><span class="v red"><strong>${moneyP(totalCosts)}</strong></span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px;max-width:400px"><h3>Net Profit</h3>
+      <div class="kpi"><span class="l" style="font-size:16px">Net</span><span class="v ${net>=0?'green':'red'}" style="font-size:20px"><strong>${moneyP(net)}</strong></span></div>
+      <div class="kpi"><span class="l">Margin</span><span class="v">${gross>0?pct(net/gross):'—'}</span></div>
+    </div>`;
+}
+
+// ─── EXPENSES ───
+function renderExpenses(v){
+  const total=totalExpenses();
+  const byCat={};state.expenses.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+(+e.amount||0);});
+  v.innerHTML=`
+    <div class="section-h"><h2>Expenses</h2><div class="actions"><button class="btn primary" onclick="openModal('addexpense')">+ expense</button></div></div>
+    <div class="grid" style="margin-bottom:18px">
+      <div class="card"><div class="kpi"><span class="l">Total expenses</span><span class="v red">${moneyP(total)}</span></div></div>
+      ${Object.entries(byCat).map(([cat,amt])=>`<div class="card"><div class="kpi"><span class="l">${esc(cat)}</span><span class="v">${moneyP(amt)}</span></div></div>`).join('')}
+    </div>
+    ${state.expenses.length?`<table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead><tbody>
+    ${state.expenses.sort((a,b)=>b.ts-a.ts).map(e=>`<tr><td class="mono">${isoDate(e.ts)}</td><td>${esc(e.description)}</td><td>${esc(e.category)}</td><td class="r">${moneyP(e.amount)}</td></tr>`).join('')}
+    <tr class="total"><td colspan="3">Total</td><td class="r">${moneyP(total)}</td></tr></tbody></table>`:'<div class="empty">No expenses recorded</div>'}`;
+}
+
+// ─── COMPLIANCE ───
+function renderCompliance(v){
+  const pi=+state.settings.piAnnualPremium||0;const minPI=RULES.piSyscMinBroker;
+  const piOk=pi>0;
+  v.innerHTML=`
+    <div class="section-h"><h2>Compliance Dashboard</h2><div class="sub">mortgage broker regulatory obligations</div></div>
+    <div class="grid2">
+      <div class="card"><h3>Professional Indemnity</h3>
+        <div class="kpi"><span class="l">FCA minimum (single claim)</span><span class="v">${money(RULES.piMinCoverSingleBroker)}</span></div>
+        <div class="kpi"><span class="l">FCA minimum (aggregate)</span><span class="v">${money(RULES.piMinCoverAggregateBroker)}</span></div>
+        <div class="kpi"><span class="l">Your annual premium</span><span class="v ${piOk?'green':'red'}">${piOk?moneyP(pi):'NOT SET'}</span></div>
+        <div class="kpi"><span class="l">Status</span><span class="v ${piOk?'green':'red'}">${piOk?'Entered':'Action required'}</span></div>
+      </div>
+      <div class="card"><h3>FCA / Network</h3>
+        <div class="kpi"><span class="l">FCA periodic fee</span><span class="v">${moneyP(state.settings.fcaAnnualEstimate||RULES.fcaFeeMinimum)}</span></div>
+        <div class="kpi"><span class="l">Firm status</span><span class="v">${esc(state.settings.arOrDa)}</span></div>
+        ${state.settings.networkName?`<div class="kpi"><span class="l">Network</span><span class="v">${esc(state.settings.networkName)}</span></div>`:''}
+        ${state.settings.networkLevyPct>0?`<div class="kpi"><span class="l">Network levy</span><span class="v">${pct(state.settings.networkLevyPct)}</span></div>`:''}
+        <div class="kpi"><span class="l">Record retention</span><span class="v">${RULES.recordRetentionYears} years</span></div>
+      </div>
+      <div class="card"><h3>CPD</h3>
+        <div class="kpi"><span class="l">Required hours/year</span><span class="v">${RULES.cpdHoursPerYear} hrs</span></div>
+        <div class="kpi"><span class="l">Advisers</span><span class="v">${state.advisers.length}</span></div>
+      </div>
+      <div class="card"><h3>Key Rules</h3>
+        <div class="kpi"><span class="l">Clawback window</span><span class="v">${RULES.clawbackWindowMonthsTypical}m typical</span></div>
+        <div class="kpi"><span class="l">Invoice terms</span><span class="v">${RULES.invoiceTermsDays} days</span></div>
+        <div class="kpi"><span class="l">VAT threshold</span><span class="v">${money(RULES.vatRegThreshold)}</span></div>
+        <div class="kpi"><span class="l">FOS time bar</span><span class="v">${RULES.fosTimeBarYears} years</span></div>
+      </div>
+    </div>`;
+}
+
+// ─── Q&A ───
+const T0_QA=[
+  {q:/proc|procuration/i,a:'Procuration fees are paid by the lender to the broker on completion. Typically 0.35-0.40% of loan amount for residential, 0.50%+ for BTL. Must be disclosed to the client under MCOB 4.4A. Some lenders pay on offer, most on completion. Network ARs typically surrender 15-30% to the network.'},
+  {q:/clawback/i,a:'If the client redeems within the clawback window (typically 24 months, some lenders 36), the lender claws back the procuration fee — usually 100% in months 1-12, tapering to 50% in months 13-24. Some lenders use a flat 100% for the full window. Track clawback expiry dates and accrue a provision.'},
+  {q:/broker fee|client fee/i,a:'Broker fees must be disclosed in the IDD and Fee Agreement (MCOB 4.4A.4R). Common structures: fixed fee (£500-£1,500), % of loan (typically 0.3-0.5%), or hybrid. Fee trigger is usually at application or offer. If charged on application, refund policy must be disclosed. Some firms charge on DIP for non-refundable admin fee.'},
+  {q:/pi|professional indemnity|insurance/i,a:'FCA requires mortgage brokers to hold PI cover meeting MCD minimums: €1.3M single claim, €1.924M aggregate (SYSC practical floor ~£1.5M). Ensure run-off cover is included. Some networks arrange group PI. Premiums depend on case volume, complaint history, and product types (BTL/commercial attract higher premiums).'},
+  {q:/fca fee|periodic fee|levy/i,a:'FCA periodic fees are billed quarterly via fee block A.18 (Home Finance). Minimum ~£1,500 for small firms. Larger firms pay based on income. FSCS levy is separate. AR firms pay via network (which may mark up). DA firms pay directly.'},
+  {q:/network|ar |appointed/i,a:'Appointed Representatives (ARs) operate under a network\'s FCA permissions. The network takes 15-30% of procuration fees (the "levy"). Benefits: compliance support, PI arranged, FCA fees included, sourcing access. Downside: reduced income, less control. Directly Authorised (DA) firms pay own fees but keep 100%.'},
+  {q:/protection|life|ci|critical/i,a:'Protection commissions (life, CI, IP, buildings) are typically indemnity-based: full commission paid upfront, clawable if the policy cancels within 4 years (or term-based: smaller monthly payments). Initial commission rates vary by provider: 100-180% for life/CI, 40-80% for income protection. Report separately from mortgage procuration.'},
+  {q:/vat/i,a:'Mortgage broking fees are exempt from VAT (VATA 1994 Schedule 9 Group 5 Item 5 — arranging finance). However, if you provide non-exempt services (e.g., conveyancing referrals, lettings management), you may need to register for VAT once total taxable turnover exceeds £90,000 (2025-26 threshold).'},
+  {q:/complaint|fos|dispute/i,a:'FCA DISP requires complaint acknowledgement within 3 business days and final response within 8 weeks. Client can escalate to FOS after 8 weeks or on receipt of final response. FOS time bar: 6 years from event or 3 years from awareness. Current FOS limit: £430,000 (from 1 April 2024). Maintain a complaints register per SYSC.'},
+  {q:/record|retention/i,a:'SYSC requires 7 years retention for most mortgage records (from completion date or end of relationship). Suitability reports, fact-finds, IDD, fee agreements, ESIS, correspondence, complaint files. Some firms retain longer for FOS protection. Export regularly from FallMortgagePractice for offline backup.'},
+];
+function askT0(q){for(const r of T0_QA){if(r.q.test(q))return {answer:r.a,source:'T0 · UK mortgage broker rules'};}return null;}
+async function askT3(q){
+  const keys=[{k:state.settings.anthropicKey,name:'Anthropic',url:'https://api.anthropic.com/v1/messages',bodyFn:()=>JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:'You are a UK mortgage broker practice management expert. Answer concisely.\n\n'+q}]}),headers:{'x-api-key':'KEY','anthropic-version':'2023-06-01','content-type':'application/json'},parse:r=>r.content?.[0]?.text}];
+  for(const p of keys){if(!p.k)continue;try{const hdrs={};for(const[hk,hv]of Object.entries(p.headers))hdrs[hk]=hv.replace('KEY',p.k);const res=await fetch(p.url,{method:'POST',headers:hdrs,body:p.bodyFn()});if(!res.ok)continue;const json=await res.json();const text=p.parse(json);if(text)return {answer:text,source:'T3 · '+p.name};}catch(e){}}return null;
+}
+
+function renderQA(v){
+  v.innerHTML=`<div class="section-h"><h2>Q & A</h2><div class="sub">T0 offline rules · T3 BYOK</div></div>
+    <p style="font-size:12px;color:var(--cream-dim);margin-bottom:14px">Ask about procuration, clawback, broker fees, PI cover, FCA fees, networks, protection commissions, VAT, complaints, record retention.</p>
+    <div class="card" style="max-width:780px">
+      <div class="chat" id="chatBox">${(state.chat||[]).map(m=>`<div class="msg ${m.role}">${esc(m.text)}${m.source?`<div class="src">${esc(m.source)}</div>`:''}</div>`).join('')}</div>
+      <div class="chat-input"><input id="chatIn" placeholder="Ask…" onkeydown="if(event.key==='Enter')askQuestion()"><button class="btn primary" onclick="askQuestion()">Ask</button></div>
+    </div>`;
+  const box=$('#chatBox');if(box)box.scrollTop=box.scrollHeight;
+}
+async function askQuestion(){
+  const inp=$('#chatIn');if(!inp)return;const q=inp.value.trim();if(!q)return;inp.value='';
+  state.chat.push({role:'user',text:q});render();
+  let r=askT0(q);if(!r)r=await askT3(q);
+  state.chat.push(r?{role:'bot',text:r.answer,source:r.source}:{role:'bot',text:'No T0 match and no BYOK key configured. Add a key in Settings for T3 answers.',source:'system'});
+  saveState();render();
+}
+
+// ─── Command palette ───
+function openPalette(){$('#palette').classList.add('open');const inp=$('#pInput');inp.value='';inp.focus();
+  inp.onkeydown=e=>{if(e.key==='Escape'){closePalette();}else if(e.key==='Enter'){paletteAsk();}};
+  document.addEventListener('keydown',function esc(e){if(e.key==='Escape'){closePalette();document.removeEventListener('keydown',esc);}});
+}
+function closePalette(){$('#palette').classList.remove('open');}
+async function paletteAsk(){
+  const inp=$('#pInput');const q=inp.value.trim();if(!q)return;
+  const body=$('#pBody');body.innerHTML='<div style="padding:14px;color:var(--cream-dim);font-size:13px">thinking…</div>';
+  let r=askT0(q);if(!r)r=await askT3(q);
+  body.innerHTML=`<div style="padding:14px"><div class="msg bot">${esc(r?r.answer:'No match. Try the Q&A tab with a BYOK key.')}${r?.source?`<div class="src">${esc(r.source)}</div>`:''}</div></div>`;
+  inp.value='';
+}
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openPalette();}});
+
+// ─── Modals ───
+function openModal(type,data){
+  const modal=$('#modal');const title=$('#modalTitle');const body=$('#modalBody');
+  modal.classList.add('open');
+  if(type==='settings'){
+    title.textContent='Settings';
+    body.innerHTML=`
+      <div class="row"><div class="field"><label>PI annual premium</label><input type="number" id="sPi" value="${state.settings.piAnnualPremium||0}"></div><div class="field"><label>FCA annual estimate</label><input type="number" id="sFca" value="${state.settings.fcaAnnualEstimate||1500}"></div></div>
+      <div class="row"><div class="field"><label>Network name</label><input id="sNet" value="${esc(state.settings.networkName||'')}"></div><div class="field"><label>Network levy %</label><input type="number" step="0.01" id="sLev" value="${state.settings.networkLevyPct||0}"></div></div>
+      <div class="field"><label>Firm status</label><select id="sDa"><option value="DA" ${state.settings.arOrDa==='DA'?'selected':''}>Directly Authorised</option><option value="AR" ${state.settings.arOrDa==='AR'?'selected':''}>Appointed Representative</option></select></div>
+      <div class="field"><label>Anthropic key (T3)</label><input type="password" id="sAnthro" value="${esc(state.settings.anthropicKey||'')}"></div>
+      <div class="actions">
+        <button class="btn sm" onclick="exportAll()">Export</button>
+        <button class="btn sm" onclick="importAll()">Import</button>
+        <button class="btn sm danger" onclick="wipeAll()">Wipe</button>
+        <button class="btn primary" onclick="saveSettings()">Save</button>
+        <button class="btn" onclick="closeModal()">Cancel</button>
+      </div>`;
+  }else if(type==='addcase'){
+    title.textContent='Add Case';
+    body.innerHTML=`
+      <div class="row"><div class="field"><label>Client name</label><input id="acClient"></div><div class="field"><label>Lender</label><input id="acLender"></div></div>
+      <div class="row"><div class="field"><label>Loan amount</label><input type="number" id="acLoan"></div><div class="field"><label>Property value</label><input type="number" id="acVal"></div></div>
+      <div class="row"><div class="field"><label>Product</label><input id="acProduct" placeholder="e.g. 2yr fix 4.5%"></div><div class="field"><label>Term (years)</label><input type="number" id="acTerm" value="25"></div></div>
+      <div class="row"><div class="field"><label>Type</label><select id="acType">${['purchase','remortgage','product-transfer','buy-to-let','second-charge'].map(t=>`<option value="${t}">${t}</option>`).join('')}</select></div><div class="field"><label>Stage</label><select id="acStage">${STAGES.map(s=>`<option value="${s}">${STAGE_LABELS[s]}</option>`).join('')}</select></div></div>
+      <div class="row"><div class="field"><label>Proc fee</label><input type="number" id="acProc" value="0"></div><div class="field"><label>Broker fee</label><input type="number" id="acBroker" value="0"></div></div>
+      <div class="row"><div class="field"><label>Adviser</label><select id="acAdv"><option value="">—</option>${state.advisers.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('')}</select></div><div class="field"><label>Clawback (months)</label><input type="number" id="acClaw" value="24"></div></div>
+      <div class="actions"><button class="btn primary" onclick="submitCase()">Add</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
+  }else if(type==='editcase'){
+    const c=state.cases.find(x=>x.id===data);if(!c){closeModal();return;}
+    title.textContent='Edit Case';
+    body.innerHTML=`
+      <input type="hidden" id="ecId" value="${c.id}">
+      <div class="row"><div class="field"><label>Client name</label><input id="ecClient" value="${esc(c.clientName)}"></div><div class="field"><label>Lender</label><input id="ecLender" value="${esc(c.lender)}"></div></div>
+      <div class="row"><div class="field"><label>Loan amount</label><input type="number" id="ecLoan" value="${c.loanAmount}"></div><div class="field"><label>Property value</label><input type="number" id="ecVal" value="${c.propertyValue}"></div></div>
+      <div class="row"><div class="field"><label>Product</label><input id="ecProduct" value="${esc(c.product)}"></div><div class="field"><label>Stage</label><select id="ecStage">${STAGES.map(s=>`<option value="${s}" ${c.stage===s?'selected':''}>${STAGE_LABELS[s]}</option>`).join('')}</select></div></div>
+      <div class="row"><div class="field"><label>Proc fee</label><input type="number" id="ecProc" value="${c.procFee}"></div><div class="field"><label>Broker fee</label><input type="number" id="ecBroker" value="${c.brokerFee}"></div></div>
+      <div class="row"><div class="field"><label>Adviser</label><select id="ecAdv"><option value="">—</option>${state.advisers.map(a=>`<option value="${a.id}" ${c.adviserId===a.id?'selected':''}>${esc(a.name)}</option>`).join('')}</select></div><div class="field"><label>Clawback months</label><input type="number" id="ecClaw" value="${c.clawbackMonths}"></div></div>
+      <div class="actions"><button class="btn primary" onclick="submitEditCase()">Save</button><button class="btn danger" onclick="deleteCase('${c.id}')">Delete</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
+  }else if(type==='addproc'){
+    title.textContent='Add Procuration Fee';
+    body.innerHTML=`
+      <div class="row"><div class="field"><label>Client name</label><input id="apClient"></div><div class="field"><label>Lender</label><input id="apLender"></div></div>
+      <div class="row"><div class="field"><label>Loan amount</label><input type="number" id="apLoan"></div><div class="field"><label>Fee amount</label><input type="number" id="apAmt"></div></div>
+      <div class="row"><div class="field"><label>Rate (%)</label><input type="number" step="0.01" id="apRate" value="0.35"></div><div class="field"><label>Adviser</label><select id="apAdv"><option value="">—</option>${state.advisers.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('')}</select></div></div>
+      <div style="margin-bottom:10px"><label style="font-size:12px"><input type="checkbox" id="apPaid"> Paid</label></div>
+      <div class="actions"><button class="btn primary" onclick="submitProc()">Add</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
+    const loanIn=$('#apLoan'),rateIn=$('#apRate'),amtIn=$('#apAmt');
+    const calcProc=()=>{const l=parseFloat(loanIn.value)||0;const r=parseFloat(rateIn.value)||0;if(l&&r)amtIn.value=(l*r/100).toFixed(2);};
+    loanIn.addEventListener('input',calcProc);rateIn.addEventListener('input',calcProc);
+  }else if(type==='addbrokerfee'){
+    title.textContent='Add Broker Fee';
+    body.innerHTML=`
+      <div class="row"><div class="field"><label>Client name</label><input id="abClient"></div><div class="field"><label>Amount</label><input type="number" id="abAmt"></div></div>
+      <div class="row"><div class="field"><label>Fee type</label><select id="abType"><option>fixed</option><option>percentage</option><option>hybrid</option></select></div><div class="field"><label>Trigger</label><select id="abTrig"><option>application</option><option>offer</option><option>completion</option><option>dip</option></select></div></div>
+      <div class="row"><div class="field"><label>Adviser</label><select id="abAdv"><option value="">—</option>${state.advisers.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('')}</select></div><div class="field"><div style="margin-top:18px"><label style="font-size:12px"><input type="checkbox" id="abPaid"> Paid</label></div></div></div>
+      <div class="actions"><button class="btn primary" onclick="submitBrokerFee()">Add</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
+  }else if(type==='addprotection'){
+    title.textContent='Add Protection Commission';
+    body.innerHTML=`
+      <div class="row"><div class="field"><label>Client name</label><input id="aprtClient"></div><div class="field"><label>Provider</label><input id="aprtProv"></div></div>
+      <div class="row"><div class="field"><label>Product</label><input id="aprtProduct" placeholder="e.g. Level term life"></div><div class="field"><label>Monthly premium</label><input type="number" id="aprtPrem"></div></div>
+      <div class="row"><div class="field"><label>Commission</label><input type="number" id="aprtComm"></div><div class="field"><div style="margin-top:18px"><label style="font-size:12px"><input type="checkbox" id="aprtPaid"> Paid</label></div></div></div>
+      <div class="actions"><button class="btn primary" onclick="submitProtection()">Add</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
+  }else if(type==='addclawback'){
+    title.textContent='Add Clawback Event';
+    body.innerHTML=`
+      <div class="row"><div class="field"><label>Client name</label><input id="aclClient"></div><div class="field"><label>Lender</label><input id="aclLender"></div></div>
+      <div class="row"><div class="field"><label>Clawback amount</label><input type="number" id="aclAmt"></div><div class="field"><label>Reason</label><input id="aclReason" placeholder="e.g. early redemption month 8"></div></div>
+      <div class="actions"><button class="btn primary" onclick="submitClawback()">Add</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
+  }else if(type==='addexpense'){
+    title.textContent='Add Expense';
+    body.innerHTML=`
+      <div class="row"><div class="field"><label>Description</label><input id="aeDesc"></div><div class="field"><label>Amount</label><input type="number" id="aeAmt"></div></div>
+      <div class="field"><label>Category</label><select id="aeCat"><option>office</option><option>software</option><option>marketing</option><option>travel</option><option>insurance</option><option>legal</option><option>training</option><option>subscriptions</option><option>staff</option><option>other</option></select></div>
+      <div class="actions"><button class="btn primary" onclick="submitExpense()">Add</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
+  }else if(type==='addadviser'){
+    title.textContent='Add Adviser';
+    body.innerHTML=`
+      <div class="row"><div class="field"><label>Name</label><input id="aaN"></div><div class="field"><label>FCA ref</label><input id="aaFca"></div></div>
+      <div class="field"><label>Qualification</label><input id="aaQual" value="CeMAP"></div>
+      <div class="actions"><button class="btn primary" onclick="submitAdviser()">Add</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
+  }else if(type==='addschedule'){
+    title.textContent='Add Fee Schedule';
+    body.innerHTML=`
+      <div class="row"><div class="field"><label>Name</label><input id="asN" placeholder="e.g. Standard residential"></div><div class="field"><label>Broker fee</label><input type="number" id="asFee" value="499"></div></div>
+      <div class="row"><div class="field"><label>Type</label><select id="asType"><option>fixed</option><option>percentage</option><option>hybrid</option></select></div><div class="field"><label>Trigger</label><select id="asTrig"><option>application</option><option>offer</option><option>completion</option></select></div></div>
+      <div class="field"><label>Notes</label><input id="asNotes"></div>
+      <div class="actions"><button class="btn primary" onclick="submitSchedule()">Add</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
+  }
+}
+function closeModal(){$('#modal').classList.remove('open');}
+
+// ─── Submit helpers ───
+function editCase(id){openModal('editcase',id);}
+async function submitCase(){
+  const c=newCase();c.clientName=$('#acClient').value.trim();c.lender=$('#acLender').value.trim();
+  c.loanAmount=parseFloat($('#acLoan').value)||0;c.propertyValue=parseFloat($('#acVal').value)||0;
+  c.product=$('#acProduct').value.trim();c.term=parseInt($('#acTerm').value)||25;
+  c.mortgageType=$('#acType').value;c.stage=$('#acStage').value;c.stageDate=now();
+  c.procFee=parseFloat($('#acProc').value)||0;c.brokerFee=parseFloat($('#acBroker').value)||0;
+  c.adviserId=$('#acAdv').value;c.clawbackMonths=parseInt($('#acClaw').value)||24;
+  if(c.stage==='completed'){c.completionDate=now();c.clawbackExpiry=now()+c.clawbackMonths*30*dayMs;}
+  if(!c.clientName){toast('Client name required');return;}
+  await saveCase(c,'case.created');closeModal();toast('Case added');render();
+}
+async function submitEditCase(){
+  const id=$('#ecId').value;const c=state.cases.find(x=>x.id===id);if(!c)return;
+  c.clientName=$('#ecClient').value.trim();c.lender=$('#ecLender').value.trim();
+  c.loanAmount=parseFloat($('#ecLoan').value)||0;c.propertyValue=parseFloat($('#ecVal').value)||0;
+  c.product=$('#ecProduct').value.trim();const newStage=$('#ecStage').value;
+  if(newStage!==c.stage){c.stageDate=now();if(newStage==='completed'&&c.stage!=='completed'){c.completionDate=now();c.clawbackExpiry=now()+(parseInt($('#ecClaw').value)||24)*30*dayMs;}}
+  c.stage=newStage;c.procFee=parseFloat($('#ecProc').value)||0;c.brokerFee=parseFloat($('#ecBroker').value)||0;
+  c.adviserId=$('#ecAdv').value;c.clawbackMonths=parseInt($('#ecClaw').value)||24;
+  await saveCase(c,'case.updated');closeModal();toast('Case saved');render();
+}
+async function deleteCase(id){if(!confirm('Delete this case?'))return;state.cases=state.cases.filter(c=>c.id!==id);await idbDel('cases',id);await appendAudit('case.deleted','',{caseId:id});closeModal();toast('Deleted');render();}
+async function submitProc(){
+  const p={id:uid('pf'),ts:now(),updatedAt:now(),clientName:$('#apClient').value.trim(),clientId:'',lender:$('#apLender').value.trim(),loanAmount:parseFloat($('#apLoan').value)||0,amount:parseFloat($('#apAmt').value)||0,rate:parseFloat($('#apRate').value)/100||0,adviserId:$('#apAdv').value,paid:$('#apPaid').checked};
+  if(!p.amount){toast('Amount required');return;}
+  await saveProcFee(p);closeModal();toast('Proc fee added');render();
+}
+async function submitBrokerFee(){
+  const b={id:uid('bf'),ts:now(),updatedAt:now(),clientName:$('#abClient').value.trim(),clientId:'',amount:parseFloat($('#abAmt').value)||0,feeType:$('#abType').value,trigger:$('#abTrig').value,adviserId:$('#abAdv').value,paid:$('#abPaid').checked};
+  if(!b.amount){toast('Amount required');return;}
+  await saveBrokerFee(b);closeModal();toast('Broker fee added');render();
+}
+async function submitProtection(){
+  const p={id:uid('pc'),ts:now(),updatedAt:now(),clientName:$('#aprtClient').value.trim(),clientId:'',provider:$('#aprtProv').value.trim(),product:$('#aprtProduct').value.trim(),premium:parseFloat($('#aprtPrem').value)||0,commission:parseFloat($('#aprtComm').value)||0,paid:$('#aprtPaid').checked};
+  await saveProtection(p);closeModal();toast('Protection added');render();
+}
+async function submitClawback(){
+  const c={id:uid('cl'),ts:now(),updatedAt:now(),clientName:$('#aclClient').value.trim(),lender:$('#aclLender').value.trim(),amount:parseFloat($('#aclAmt').value)||0,reason:$('#aclReason').value.trim()};
+  if(!c.amount){toast('Amount required');return;}
+  await saveClawback(c);closeModal();toast('Clawback recorded');render();
+}
+async function submitExpense(){
+  const e={id:uid('ex'),ts:now(),updatedAt:now(),description:$('#aeDesc').value.trim(),amount:parseFloat($('#aeAmt').value)||0,category:$('#aeCat').value};
+  if(!e.amount){toast('Amount required');return;}
+  await saveExpense(e);closeModal();toast('Expense added');render();
+}
+async function submitAdviser(){
+  const a={id:uid('adv'),ts:now(),updatedAt:now(),name:$('#aaN').value.trim(),fcaRefNo:$('#aaFca').value.trim(),qualification:$('#aaQual').value.trim()};
+  if(!a.name){toast('Name required');return;}
+  await saveAdviser(a);closeModal();toast('Adviser added');render();
+}
+async function submitSchedule(){
+  const s={id:uid('fs'),ts:now(),updatedAt:now(),name:$('#asN').value.trim(),brokerFee:parseFloat($('#asFee').value)||0,type:$('#asType').value,trigger:$('#asTrig').value,notes:$('#asNotes').value.trim()};
+  if(!s.name){toast('Name required');return;}
+  state.feeSchedules.push(s);await idbPut('feeSchedules',s);closeModal();toast('Schedule added');render();
+}
+
+function saveSettings(){
+  state.settings.piAnnualPremium=parseFloat($('#sPi').value)||0;
+  state.settings.fcaAnnualEstimate=parseFloat($('#sFca').value)||0;
+  state.settings.networkName=$('#sNet').value.trim();
+  state.settings.networkLevyPct=parseFloat($('#sLev').value)||0;
+  state.settings.arOrDa=$('#sDa').value;
+  state.settings.anthropicKey=$('#sAnthro').value.trim();
+  $('#tierBadge').textContent=state.settings.anthropicKey?'T3':'T0';
+  saveState();persistSettingsLS();closeModal();toast('Settings saved');render();
+}
+
+// ─── Export / Import / Wipe ───
+function exportAll(){const d={tool:TOOLNAME,v:VERSION,ts:now(),firm:state.firm,clients:state.clients,advisers:state.advisers,cases:state.cases,procurationFees:state.procurationFees,brokerFees:state.brokerFees,protectionCommissions:state.protectionCommissions,clawbackEvents:state.clawbackEvents,feeSchedules:state.feeSchedules,expenses:state.expenses,settings:state.settings};const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='fallmortgagepractice-export.json';a.click();URL.revokeObjectURL(u);toast('Exported');}
+function importAll(){const inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=async()=>{const f=inp.files[0];if(!f)return;try{const d=JSON.parse(await f.text());for(const k of['clients','advisers','cases','procurationFees','brokerFees','protectionCommissions','clawbackEvents','feeSchedules','expenses']){if(Array.isArray(d[k]))for(const r of d[k]){state[k].push(r);await idbPut(k,r);}}if(d.firm){state.firm=d.firm;await idbPut('firms',d.firm);}if(d.settings)state.settings=Object.assign(state.settings,d.settings);saveState();toast('Imported');render();}catch(e){toast('Import failed');}};inp.click();}
+async function wipeAll(){if(!confirm('Wipe ALL data?'))return;if(!confirm('Are you sure?'))return;for(const s of STORES){const tx=db.transaction(s,'readwrite');tx.objectStore(s).clear();await new Promise(r=>{tx.oncomplete=r;});}location.reload();}
+
+// ─── Demo seed ───
+async function seedDemo(){
+  if(state.settings.demoLoaded||state.cases.length||state.advisers.length)return;
+  const firmId=uid('firm');
+  const firm={id:firmId,name:'Demo Mortgage Brokers',fcaRefNo:'456789',address:'10 Finance Street, London EC2A 1AA',email:'info@demomortgage.co.uk',phone:'020 7123 4567',updatedAt:now(),isDemo:true};
+  state.firm=firm;await idbPut('firms',firm);
+  const adv1={id:uid('adv'),ts:now(),updatedAt:now(),name:'Sam Walsh',fcaRefNo:'ADV001',qualification:'CeMAP',isDemo:true};
+  const adv2={id:uid('adv'),ts:now(),updatedAt:now(),name:'Nina Patel',fcaRefNo:'ADV002',qualification:'CeMAP, CeRER',isDemo:true};
+  state.advisers.push(adv1,adv2);await idbPut('advisers',adv1);await idbPut('advisers',adv2);
+  const demoData=[
+    {client:'James Patterson',lender:'Nationwide',loan:280000,val:330000,product:'2yr fix 4.49%',stage:'completed',proc:980,broker:999,months:24,adv:adv1.id},
+    {client:'Sarah & Tom Brown',lender:'Halifax',loan:350000,val:450000,product:'5yr fix 4.19%',stage:'completed',proc:1225,broker:0,months:24,adv:adv2.id},
+    {client:'David Chen',lender:'Barclays',loan:180000,val:250000,product:'2yr fix 4.69%',stage:'offered',proc:630,broker:499,months:24,adv:adv1.id},
+    {client:'Emily Rose',lender:'NatWest',loan:420000,val:525000,product:'3yr fix 4.29%',stage:'applied',proc:1470,broker:999,months:36,adv:adv2.id},
+    {client:'Mark Singh',lender:'HSBC',loan:200000,val:280000,product:'Product transfer 4.59%',stage:'dip',proc:500,broker:0,months:24,adv:adv1.id},
+    {client:'Lucy Williams',lender:'Skipton',loan:150000,val:200000,product:'BTL 5yr fix 5.19%',stage:'lead',proc:750,broker:0,months:24,adv:adv2.id},
+  ];
+  for(const d of demoData){
+    const c=newCase();c.clientName=d.client;c.lender=d.lender;c.loanAmount=d.loan;c.propertyValue=d.val;c.product=d.product;c.stage=d.stage;c.procFee=d.proc;c.brokerFee=d.broker;c.clawbackMonths=d.months;c.adviserId=d.adv;c.isDemo=true;
+    if(d.stage==='completed'){c.completionDate=now()-Math.floor(Math.random()*180)*dayMs;c.clawbackExpiry=c.completionDate+d.months*30*dayMs;}
+    state.cases.push(c);await idbPut('cases',c);
+    if(d.stage==='completed'){
+      const pf={id:uid('pf'),ts:c.completionDate,updatedAt:now(),clientName:d.client,clientId:'',lender:d.lender,loanAmount:d.loan,amount:d.proc,rate:d.proc/d.loan,adviserId:d.adv,paid:true,isDemo:true};
+      state.procurationFees.push(pf);await idbPut('procurationFees',pf);
+      if(d.broker>0){const bf={id:uid('bf'),ts:c.completionDate,updatedAt:now(),clientName:d.client,clientId:'',amount:d.broker,feeType:'fixed',trigger:'completion',adviserId:d.adv,paid:true,isDemo:true};state.brokerFees.push(bf);await idbPut('brokerFees',bf);}
+    }
+  }
+  const prot={id:uid('pc'),ts:now(),updatedAt:now(),clientName:'James Patterson',provider:'Aviva',product:'Level term life 25yr',premium:42,commission:756,paid:true,isDemo:true};
+  state.protectionCommissions.push(prot);await idbPut('protectionCommissions',prot);
+  const exp1={id:uid('ex'),ts:now(),updatedAt:now(),description:'Sourcing system subscription (annual)',amount:1200,category:'software',isDemo:true};
+  const exp2={id:uid('ex'),ts:now(),updatedAt:now(),description:'Office rent (monthly)',amount:800,category:'office',isDemo:true};
+  state.expenses.push(exp1,exp2);await idbPut('expenses',exp1);await idbPut('expenses',exp2);
+  state.settings.piAnnualPremium=3200;state.settings.fcaAnnualEstimate=1500;state.settings.arOrDa='DA';state.settings.demoLoaded=true;
+  await saveState();await appendAudit('demo.seeded','first boot',{});
+}
+
+// ─── BOOT ───
+(async function boot(){
+  try{
+    await loadAll();await seedDemo();initMesh();
+    $('#tierBadge').textContent=state.settings.anthropicKey?'T3':'T0';
+    render();
+  }catch(e){
+    console.error('[fallmortgagepractice] boot error:',e);
+    document.getElementById('view').innerHTML='<div class="empty">Boot error: '+esc(e.message)+'</div>';
+  }
+})();
+</script>
+</body>
+</html>
