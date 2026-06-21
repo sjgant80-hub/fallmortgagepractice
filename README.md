@@ -38,7 +38,7 @@ You're running a mortgage broker firm. Procuration fees come in from lenders, br
 - **Command palette**: Ctrl+K to ask regulatory questions inline
 - **Demo data**: 6 cases across pipeline stages, 2 advisers, protection, expenses
 
-### Audit chain (Mansoor P3)
+### Audit chain (P3)
 
 Every data change appends a SHA-256 chained entry. Export for compliance records.
 
