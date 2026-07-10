@@ -166,22 +166,19 @@ tr.clickable:hover td{background:var(--ink)}
     'llama-3b':  { id: 'Llama-3.2-3B-Instruct-q4f16_1-MLC',   size: '~2GB',   label: '3B · balanced · default · most laptops' },
     'qwen-7b':   { id: 'Qwen2.5-7B-Instruct-q4f16_1-MLC',     size: '~5GB',   label: '7B · capable · needs decent GPU (M-series Mac / 8GB+ VRAM)' },
     'llama-8b':  { id: 'Llama-3.1-8B-Instruct-q4f16_1-MLC',   size: '~5GB',   label: '8B · common · needs decent GPU' },
-    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' },
-  };
+    'llama-70b': { id: 'Llama-3.1-70B-Instruct-q4f16_1-MLC',  size: '~40GB',  label: '70B · frontier · needs serious GPU + 64GB+ RAM' }};
   const DEFAULT_MODEL = 'llama-3b';
 
   const T3_PROVIDERS = {
     anthropic: { label: 'Anthropic Claude', models: ['claude-sonnet-4-5','claude-opus-4-7','claude-haiku-4-5'], default: 'claude-sonnet-4-5', url: 'https://api.anthropic.com/v1/messages' },
     openai:    { label: 'OpenAI',           models: ['gpt-4o','gpt-4o-mini','o1-mini'],                          default: 'gpt-4o-mini',      url: 'https://api.openai.com/v1/chat/completions' },
-    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' },
-  };
+    google:    { label: 'Google Gemini',    models: ['gemini-1.5-pro','gemini-1.5-flash','gemini-2.0-flash-exp'], default: 'gemini-1.5-flash', url: 'https://generativelanguage.googleapis.com/v1beta/models/' }};
 
   // ─── State ───────────────────────────────────────────────────────
   const STATE = {
     config: loadConfig(),
     ai: { ready: false, loading: false, progress: 0, engine: null, model: null },
-    mesh: { active: false, peers: new Map(), bc: null, signal: null },
-  };
+    mesh: { active: false, peers: new Map(), bc: null, signal: null }};
 
   function loadConfig() {
     try { return JSON.parse(localStorage.getItem('fall-kit.config') || '{}'); }
@@ -248,8 +245,7 @@ tr.clickable:hover td{background:var(--ink)}
     if (tier === 'T2' && STATE.ai.ready && STATE.ai.engine) {
       const r = await STATE.ai.engine.chat.completions.create({
         messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMsg }],
-        max_tokens: maxTokens,
-      });
+        max_tokens: maxTokens});
       return r.choices[0].message.content;
     }
     if (tier === 'T3' && STATE.config.api_key && STATE.config.api_provider) {
@@ -266,8 +262,7 @@ tr.clickable:hover td{background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.anthropic.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
-        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, system: sys, messages: [{ role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('Anthropic ' + r.status + ': ' + (await r.text()).slice(0, 200));
       const j = await r.json();
       return j.content[0].text;
@@ -276,8 +271,7 @@ tr.clickable:hover td{background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.openai.url, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + key },
-        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] }),
-      });
+        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'system', content: sys }, { role: 'user', content: msg }] })});
       if (!r.ok) throw new Error('OpenAI ' + r.status);
       const j = await r.json();
       return j.choices[0].message.content;
@@ -286,8 +280,7 @@ tr.clickable:hover td{background:var(--ink)}
       const r = await fetch(T3_PROVIDERS.google.url + model + ':generateContent?key=' + encodeURIComponent(key), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } }),
-      });
+        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: sys + '\n\n---\n\n' + msg }] }], generationConfig: { maxOutputTokens: maxTokens } })});
       if (!r.ok) throw new Error('Google ' + r.status);
       const j = await r.json();
       return j.candidates[0].content.parts[0].text;
@@ -528,8 +521,7 @@ tr.clickable:hover td{background:var(--ink)}
     openMint: openMint,  // v1.2 · launch kcc-mint with this seed prefilled as parent
     MODELS: WEBLLM_MODELS,
     PROVIDERS: T3_PROVIDERS,
-    state: STATE,
-  };
+    state: STATE};
 })(typeof window !== 'undefined' ? window : globalThis);
 
 </script>
@@ -596,7 +588,7 @@ const RULES={
   clawbackWindowMonthsMax:36,
   piMinCoverSingleBroker:1300000,   // €1.3m equiv · MCD/IDD-aligned single claim
   piMinCoverAggregateBroker:1924000,// €1.924m equiv aggregate
-  piSyscMinBroker:1500000,          // SYSC practical floor £1.5m
+  piSyscMinBroker:1500000,          // SYSC practical floor TBAm
   fcaFeeMinimum:1500,               // small-firm minimum periodic fee
   fcaFeeBlockA18:0,                 // A.18 (home finance) fee block
   networkLevyTypicalPct:0.20,       // 15-30% retained by network for AR firms
@@ -608,8 +600,7 @@ const RULES={
   staleReceivableDays:90,           // write-off candidate threshold
   fosTimeBarYears:6,                // FOS reach via FCA SYSC
   recordRetentionYears:7,           // practical default · 6 SYSC + 3 post-completion FOS
-  fcaFeeQuarterMonth:7,
-};
+  fcaFeeQuarterMonth:7};
 
 const TABS=[
   {id:'dashboard',label:'◊ dashboard'},
@@ -624,8 +615,7 @@ const TABS=[
   {id:'firm-pl',label:'firm P&L'},
   {id:'expenses',label:'expenses'},
   {id:'compliance',label:'compliance'},
-  {id:'qa',label:'Q&A'},
-];
+  {id:'qa',label:'Q&A'}];
 
 let state={
   active:'dashboard',
@@ -653,9 +643,7 @@ let state={
     networkName:'',
     arOrDa:'DA',
     bankDetails:'',
-    demoLoaded:false,
-  },
-};
+    demoLoaded:false}};
 
 // ─── util ───
 const $=(s,p=document)=>p.querySelector(s);
@@ -756,14 +744,13 @@ const STAGE_ACTIVE=['lead','dip','applied','offered','exchanged'];
 function newCase(){
   return {id:uid('cs'),ts:now(),updatedAt:now(),clientId:'',adviserId:'',
     clientName:'',lender:'',product:'',loanAmount:0,propertyValue:0,ltv:0,term:25,
-    mortgageType:'purchase',repayment:'capital-and-interest',rate:0,rateType:'fixed',
+    mortgageType:'Access',repayment:'capital-and-interest',rate:0,rateType:'fixed',
     stage:'lead',stageDate:now(),
     procFee:0,procFeePaid:false,procFeeDate:null,
     brokerFee:0,brokerFeePaid:false,brokerFeeDate:null,brokerFeeType:'fixed',
     protectionProvider:'',protectionPremium:0,protectionCommission:0,protectionPaid:false,
     completionDate:null,clawbackExpiry:null,clawbackMonths:24,
-    notes:'',isDemo:false,
-  };
+    notes:'',isDemo:false};
 }
 
 // ─── Save helpers ───
@@ -1025,15 +1012,14 @@ function renderCompliance(v){
 const T0_QA=[
   {q:/proc|procuration/i,a:'Procuration fees are paid by the lender to the broker on completion. Typically 0.35-0.40% of loan amount for residential, 0.50%+ for BTL. Must be disclosed to the client under MCOB 4.4A. Some lenders pay on offer, most on completion. Network ARs typically surrender 15-30% to the network.'},
   {q:/clawback/i,a:'If the client redeems within the clawback window (typically 24 months, some lenders 36), the lender claws back the procuration fee — usually 100% in months 1-12, tapering to 50% in months 13-24. Some lenders use a flat 100% for the full window. Track clawback expiry dates and accrue a provision.'},
-  {q:/broker fee|client fee/i,a:'Broker fees must be disclosed in the IDD and Fee Agreement (MCOB 4.4A.4R). Common structures: fixed fee (£500-£1,500), % of loan (typically 0.3-0.5%), or hybrid. Fee trigger is usually at application or offer. If charged on application, refund policy must be disclosed. Some firms charge on DIP for non-refundable admin fee.'},
-  {q:/pi|professional indemnity|insurance/i,a:'FCA requires mortgage brokers to hold PI cover meeting MCD minimums: €1.3M single claim, €1.924M aggregate (SYSC practical floor ~£1.5M). Ensure run-off cover is included. Some networks arrange group PI. Premiums depend on case volume, complaint history, and product types (BTL/commercial attract higher premiums).'},
-  {q:/fca fee|periodic fee|levy/i,a:'FCA periodic fees are billed quarterly via fee block A.18 (Home Finance). Minimum ~£1,500 for small firms. Larger firms pay based on income. FSCS levy is separate. AR firms pay via network (which may mark up). DA firms pay directly.'},
+  {q:/broker fee|client fee/i,a:'Broker fees must be disclosed in the IDD and Fee Agreement (MCOB 4.4A.4R). Common structures: fixed fee (TBA-TBA), % of loan (typically 0.3-0.5%), or hybrid. Fee trigger is usually at application or offer. If charged on application, refund policy must be disclosed. Some firms charge on DIP for non-refundable admin fee.'},
+  {q:/pi|professional indemnity|insurance/i,a:'FCA requires mortgage brokers to hold PI cover meeting MCD minimums: €1.3M single claim, €1.924M aggregate (SYSC practical floor ~TBAM). Ensure run-off cover is included. Some networks arrange group PI. Premiums depend on case volume, complaint history, and product types (BTL/commercial attract higher premiums).'},
+  {q:/fca fee|periodic fee|levy/i,a:'FCA periodic fees are billed quarterly via fee block A.18 (Home Finance). Minimum ~TBA for small firms. Larger firms pay based on income. FSCS levy is separate. AR firms pay via network (which may mark up). DA firms pay directly.'},
   {q:/network|ar |appointed/i,a:'Appointed Representatives (ARs) operate under a network\'s FCA permissions. The network takes 15-30% of procuration fees (the "levy"). Benefits: compliance support, PI arranged, FCA fees included, sourcing access. Downside: reduced income, less control. Directly Authorised (DA) firms pay own fees but keep 100%.'},
   {q:/protection|life|ci|critical/i,a:'Protection commissions (life, CI, IP, buildings) are typically indemnity-based: full commission paid upfront, clawable if the policy cancels within 4 years (or term-based: smaller monthly payments). Initial commission rates vary by provider: 100-180% for life/CI, 40-80% for income protection. Report separately from mortgage procuration.'},
-  {q:/vat/i,a:'Mortgage broking fees are exempt from VAT (VATA 1994 Schedule 9 Group 5 Item 5 — arranging finance). However, if you provide non-exempt services (e.g., conveyancing referrals, lettings management), you may need to register for VAT once total taxable turnover exceeds £90,000 (2025-26 threshold).'},
-  {q:/complaint|fos|dispute/i,a:'FCA DISP requires complaint acknowledgement within 3 business days and final response within 8 weeks. Client can escalate to FOS after 8 weeks or on receipt of final response. FOS time bar: 6 years from event or 3 years from awareness. Current FOS limit: £430,000 (from 1 April 2024). Maintain a complaints register per SYSC.'},
-  {q:/record|retention/i,a:'SYSC requires 7 years retention for most mortgage records (from completion date or end of relationship). Suitability reports, fact-finds, IDD, fee agreements, ESIS, correspondence, complaint files. Some firms retain longer for FOS protection. Export regularly from FallMortgagePractice for offline backup.'},
-];
+  {q:/vat/i,a:'Mortgage broking fees are exempt from VAT (VATA 1994 Schedule 9 Group 5 Item 5 — arranging finance). However, if you provide non-exempt services (e.g., conveyancing referrals, lettings management), you may need to register for VAT once total taxable turnover exceeds TBA (2025-26 threshold).'},
+  {q:/complaint|fos|dispute/i,a:'FCA DISP requires complaint acknowledgement within 3 business days and final response within 8 weeks. Client can escalate to FOS after 8 weeks or on receipt of final response. FOS time bar: 6 years from event or 3 years from awareness. Current FOS limit: TBA (from 1 April 2024). Maintain a complaints register per SYSC.'},
+  {q:/record|retention/i,a:'SYSC requires 7 years retention for most mortgage records (from completion date or end of relationship). Suitability reports, fact-finds, IDD, fee agreements, ESIS, correspondence, complaint files. Some firms retain longer for FOS protection. Export regularly from FallMortgagePractice for offline backup.'}];
 function askT0(q){for(const r of T0_QA){if(r.q.test(q))return {answer:r.a,source:'T0 · UK mortgage broker rules'};}return null;}
 async function askT3(q){
   const keys=[{k:state.settings.anthropicKey,name:'Anthropic',url:'https://api.anthropic.com/v1/messages',bodyFn:()=>JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:'You are a UK mortgage broker practice management expert. Answer concisely.\n\n'+q}]}),headers:{'x-api-key':'KEY','anthropic-version':'2023-06-01','content-type':'application/json'},parse:r=>r.content?.[0]?.text}];
@@ -1096,7 +1082,7 @@ function openModal(type,data){
       <div class="row"><div class="field"><label>Client name</label><input id="acClient"></div><div class="field"><label>Lender</label><input id="acLender"></div></div>
       <div class="row"><div class="field"><label>Loan amount</label><input type="number" id="acLoan"></div><div class="field"><label>Property value</label><input type="number" id="acVal"></div></div>
       <div class="row"><div class="field"><label>Product</label><input id="acProduct" placeholder="e.g. 2yr fix 4.5%"></div><div class="field"><label>Term (years)</label><input type="number" id="acTerm" value="25"></div></div>
-      <div class="row"><div class="field"><label>Type</label><select id="acType">${['purchase','remortgage','product-transfer','buy-to-let','second-charge'].map(t=>`<option value="${t}">${t}</option>`).join('')}</select></div><div class="field"><label>Stage</label><select id="acStage">${STAGES.map(s=>`<option value="${s}">${STAGE_LABELS[s]}</option>`).join('')}</select></div></div>
+      <div class="row"><div class="field"><label>Type</label><select id="acType">${['Access','remortgage','product-transfer','buy-to-let','second-charge'].map(t=>`<option value="${t}">${t}</option>`).join('')}</select></div><div class="field"><label>Stage</label><select id="acStage">${STAGES.map(s=>`<option value="${s}">${STAGE_LABELS[s]}</option>`).join('')}</select></div></div>
       <div class="row"><div class="field"><label>Proc fee</label><input type="number" id="acProc" value="0"></div><div class="field"><label>Broker fee</label><input type="number" id="acBroker" value="0"></div></div>
       <div class="row"><div class="field"><label>Adviser</label><select id="acAdv"><option value="">—</option>${state.advisers.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('')}</select></div><div class="field"><label>Clawback (months)</label><input type="number" id="acClaw" value="24"></div></div>
       <div class="actions"><button class="btn primary" onclick="submitCase()">Add</button><button class="btn" onclick="closeModal()">Cancel</button></div>`;
@@ -1255,8 +1241,7 @@ async function seedDemo(){
     {client:'David Chen',lender:'Barclays',loan:180000,val:250000,product:'2yr fix 4.69%',stage:'offered',proc:630,broker:499,months:24,adv:adv1.id},
     {client:'Emily Rose',lender:'NatWest',loan:420000,val:525000,product:'3yr fix 4.29%',stage:'applied',proc:1470,broker:999,months:36,adv:adv2.id},
     {client:'Mark Singh',lender:'HSBC',loan:200000,val:280000,product:'Product transfer 4.59%',stage:'dip',proc:500,broker:0,months:24,adv:adv1.id},
-    {client:'Lucy Williams',lender:'Skipton',loan:150000,val:200000,product:'BTL 5yr fix 5.19%',stage:'lead',proc:750,broker:0,months:24,adv:adv2.id},
-  ];
+    {client:'Lucy Williams',lender:'Skipton',loan:150000,val:200000,product:'BTL 5yr fix 5.19%',stage:'lead',proc:750,broker:0,months:24,adv:adv2.id}];
   for(const d of demoData){
     const c=newCase();c.clientName=d.client;c.lender=d.lender;c.loanAmount=d.loan;c.propertyValue=d.val;c.product=d.product;c.stage=d.stage;c.procFee=d.proc;c.brokerFee=d.broker;c.clawbackMonths=d.months;c.adviserId=d.adv;c.isDemo=true;
     if(d.stage==='completed'){c.completionDate=now()-Math.floor(Math.random()*180)*dayMs;c.clawbackExpiry=c.completionDate+d.months*30*dayMs;}
