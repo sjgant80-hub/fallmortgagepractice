@@ -66,4 +66,4 @@ Single HTML · <400KB · Sovereign · IDB primary · KONOMI shim · fall-signal 
 
 ## Licence
 
-MIT · Simon Gant · part of the [sjgant80-hub](https://github.com/sjgant80-hub) sovereign estate · prime 881 · ◊·κ=1.
+MIT · Simon Gant · part of the [sjgant80-hub](https://github.com/sjgant80-hub) sovereign estate.
